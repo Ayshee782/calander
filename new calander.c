@@ -1,4 +1,8 @@
 #include <stdio.h>
+#include <time.h>
+
+#include <stdlib.h>
+
 int isLeapYear(int year) {
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 }
@@ -52,6 +56,19 @@ int main() {
     printf("Enter year: ");
     scanf("%d", &year);
     printCalendar(month, year);
+   setenv("TZ", "Asia/Dhaka", 1);  // Set the environment variable for time zone
+    tzset();  // Apply the time zone change
+
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+    printf("Current Date and Time in Bangladesh: %d-%02d-%02d %02d:%02d:%02d\n",
+           tm.tm_year + 1900,
+           tm.tm_mon + 1,
+           tm.tm_mday,
+           tm.tm_hour,
+           tm.tm_min,
+           tm.tm_sec);
+
 
     return 0;
 }
